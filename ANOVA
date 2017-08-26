@@ -1,0 +1,36 @@
+
+data new;
+  input tensile$ mixing;
+  cards;
+A 20.5 
+A 17.7 
+A 20.0 
+A 19.2
+B 24.0 
+B 26.2 
+B 21.2 
+B 26.1
+C 27.4 
+C 35.2 
+C 31.2 
+C 28.2
+D 17.1 
+D 18.1 
+D 18.5 
+D 16.7
+E 36.5 
+E 33.9 
+E 26.9 
+E 27.0
+   ;
+title 'One-Way ANOVA Example';
+    /* Balanced Data*/
+proc print data=new;
+proc anova data=new; class tensile;
+    model mixing=tensile;
+    means tensile/ alpha=0.05 lsd tukey;
+run;
+
+
+
+
