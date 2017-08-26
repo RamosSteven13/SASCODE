@@ -1,0 +1,51 @@
+/*This is the an example of influence of an outlier*/
+data cars;
+input Fuel_Number Car $ Response;
+datalines;
+1	Mer	24.8
+2	Mer	24.7
+3	Mer	24.9
+4	Mer	23.9
+5	Mer	24.9
+6	Mer	24.9
+7	Mer	24.9
+8	Mer	24.5
+1	Peugeot	24.5
+2	Peugeot	25.2
+3	Peugeot	27.4
+4	Peugeot	23.3
+5	Peugeot	25
+6	Peugeot	24.7
+7	Peugeot	23.2
+8	Peugeot	24.9
+1	Olds	19.6
+2	Olds	20
+3	Olds	19.3
+4	Olds	19.1
+5	Olds	19.7
+6	Olds	20.1
+7	Olds	17.8
+8	Olds	19.6
+1	Volks	41.7
+2	Volks	42.2
+3	Volks	41.7
+4	Volks	39.3
+5	Volks	42.8
+6	Volks	42.4
+8	Volks	40.6
+7	Volks	24.4
+run;
+/*7	Volks	24.4*/
+/*The deleted obs 7	Volks	24.4*/
+
+
+proc glm data=cars;
+class Fuel_Number Car;
+model response= Fuel_Number Car;
+random Car /test;
+lsmeans  Car /stderr pdiff;
+run;
+/*Data credit to*/
+/*Statistical Design and Analysis of Experiments: With Applications to Engineering and Science, 2nd Edition*/
+/**/
+/*Robert L. Mason, Richard F. Gunst, James L. Hess*/
